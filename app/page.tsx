@@ -1,103 +1,129 @@
+import Hero from "@/components/(front-end)/hero";
 import Image from "next/image";
+import { getBanners } from "@/actions/banners";
+import { Suspense } from "react";
+import { type Banner } from "@prisma/client";
+import { getQuizzes } from "@/actions/quizzes";
+import Link from "next/link";
+interface PageData {
+  banners: Banner[];
+  quizzes:any;
+}
+async function getPageData(): Promise<PageData> {
+  const [bannersData,quizzes] = await Promise.all([getBanners(),getQuizzes()]);
 
-export default function Home() {
+  return {
+    banners: bannersData?.data ?? [],
+    quizzes:quizzes?.data ?? []
+  };
+}
+
+export default async function Home() {
+  const { banners,quizzes } = await getPageData();
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div>
+      {" "}
+      <div className="">
+        <Suspense>
+          <Hero banners={banners} />
+          {/* {JSON.stringify(banners)} */}
+        </Suspense>
+      </div>
+      <section className="bg-white dark:bg-gray-900">
+        <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+          <div className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+            <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+              WHO WE ARE?
+            </h2>
+            <p className="mb-4">
+              We are strategists, designers and developers. Innovators and
+              problem solvers. Small enough to be simple and quick, but big
+              enough to deliver the scope you want at the pace you need. Small
+              enough to be simple and quick, but big enough to deliver the scope
+              you want at the pace you need.
+            </p>
+            <p>
+              We are strategists, designers and developers. Innovators and
+              problem solvers. Small enough to be simple and quick.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mt-8">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+              width={500}
+              height={500}
+              src={banners[0]?.imageUrl}
+              className="w-full rounded-lg object-cover"
+              alt={banners[0]?.title}
+              priority
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <Image
+              width={500}
+              height={500}
+              src={banners[1]?.imageUrl}
+              className="mt-4 w-full lg:mt-10 rounded-lg object-cover"
+              alt={banners[1]?.title}
+              priority
+            />
+
+            {/* <img className="w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png" alt="office content 1"/>
+            <img className="mt-4 w-full lg:mt-10 rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png" alt="office content 2"/> */}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
+      </section>
+      <section>
+        <div className="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid  lg:py-16 lg:px-6">
+          <div className="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+            <h2 className="text-center mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+              EDUCATION MATERIALS
+            </h2>
+            <p className="mb-4">
+              We are strategists, designers and developers. Innovators and
+              problem solvers. Small enough to be simple and quick, but big
+              enough to deliver the scope you want at the pace you need. Small
+              enough to be simple and quick, but big enough to deliver the scope
+              you want at the pace you need.
+            </p>
+            <p>
+              We are strategists, designers and developers. Innovators and
+              problem solvers. Small enough to be simple and quick.
+            </p>
+              {/* {JSON.stringify(quizzes)} */}
+            <div className="  md:flex gap-2">
+              {
+                quizzes?.map((quiz:any,i:number)=>{
+                  return <div className="w-full mb-5  bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <Link  href="">
+
+<Image
+              width={500}
+              height={500}
+              src={banners[1]?.imageUrl}
+              className="p-8 rounded-t-lg w-full  object-cover"
+              alt={banners[1]?.title}
+              priority
+            />
+    </Link>
+    <div className="px-5 pb-5">
+        <a href="#">
+            <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{quiz?.name}</h5>
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        
+        <div className="flex items-center justify-between">
+            <span className="text-3xl font-bold text-gray-900 dark:text-white"></span>
+            <Link href={`/quizzes/${quiz?.slug}`} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">GO {`->`}</Link>
+        </div>
+    </div>
+</div>
+
+                })
+              }
+
+
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
