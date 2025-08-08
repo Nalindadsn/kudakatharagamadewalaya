@@ -1,3 +1,4 @@
+"use client"
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { siteConfig } from '@/constants/site';
 import { UploadButton } from '@/utils/uploadthing';
@@ -30,20 +31,20 @@ export default function ImageInput({
             src={imageUrl}
             width="300"
           />
-          <UploadButton
-            className="mt-4 ut-button:!cursor-pointer ut-button:bg-brandColor ut-label:text-white ut-label:hover:text-brandBlack/50 ut-button:ut-readying:bg-red-600/50"
-            endpoint={endpoint}
-            onClientUploadComplete={(res) => {
-              // Do something with the response
-              console.log('Files: ', res);
-
-              setImageUrl(res[0].url);
-            }}
-            onUploadError={(error: Error) => {
-              // Do something with the error.
-              alert(`ERROR! ${error.message}`);
-            }}
-          />
+         
+           <UploadButton
+        endpoint="imageUploader"
+        onClientUploadComplete={(res) => {
+          // Do something with the response
+          console.log("Files: ", res);
+          setImageUrl(res[0].url);
+          alert("Upload Completed");
+        }}
+        onUploadError={(error: Error) => {
+          // Do something with the error.
+          alert(`ERROR! ${error.message}`);
+        }}
+      />
         </div>
       </CardContent>
     </Card>

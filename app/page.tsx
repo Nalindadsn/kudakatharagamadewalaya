@@ -3,23 +3,21 @@ import Image from "next/image";
 import { getBanners } from "@/actions/banners";
 import { Suspense } from "react";
 import { type Banner } from "@prisma/client";
-import { getQuizzes } from "@/actions/quizzes";
 import Link from "next/link";
 interface PageData {
   banners: Banner[];
-  quizzes:any;
+  // quizzes:any;
 }
 async function getPageData(): Promise<PageData> {
-  const [bannersData,quizzes] = await Promise.all([getBanners(),getQuizzes()]);
+  const [bannersData,] = await Promise.all([getBanners()]);
 
   return {
     banners: bannersData?.data ?? [],
-    quizzes:quizzes?.data ?? []
   };
 }
 
 export default async function Home() {
-  const { banners,quizzes } = await getPageData();
+  const { banners, } = await getPageData();
 
   return (
     <div>
@@ -90,34 +88,7 @@ export default async function Home() {
             </p>
               {/* {JSON.stringify(quizzes)} */}
             <div className="  md:flex gap-2">
-              {
-                quizzes?.map((quiz:any,i:number)=>{
-                  return <div className="w-full mb-5  bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-    <Link  href="">
-
-<Image
-              width={500}
-              height={500}
-              src={banners[1]?.imageUrl}
-              className="p-8 rounded-t-lg w-full  object-cover"
-              alt={banners[1]?.title}
-              priority
-            />
-    </Link>
-    <div className="px-5 pb-5">
-        <a href="#">
-            <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{quiz?.name}</h5>
-        </a>
-        
-        <div className="flex items-center justify-between">
-            <span className="text-3xl font-bold text-gray-900 dark:text-white"></span>
-            <Link href={`/quizzes/${quiz?.slug}`} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">GO {`->`}</Link>
-        </div>
-    </div>
-</div>
-
-                })
-              }
+             
 
 
             </div>
