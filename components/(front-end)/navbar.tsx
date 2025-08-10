@@ -48,13 +48,14 @@ export default function Navbar() {
         <div className="lg:w-[1185px] container flex items-center justify-between lg:pt-3.5 pt-0 px-2 gap-6 mx-auto">
           {/* Logo */}
           <Link className="" href="/">
-            {/* <Image
-              src={siteConfig.logo || '/Logo.png'}
+            <Image
+              src={siteConfig.logo || '/logo.png'}
               alt={siteConfig.description || siteConfig.name}
-              width={400}
-              height={400}
-              className="md:w-36 w-28 mt-1"
-            /> */}LEARNERS
+              width={50}
+              height={50}
+              className="md:w-10 w-10 mt-1"
+            />
+            
           </Link>
 
           {/* SEARCH */}
@@ -151,20 +152,20 @@ export default function Navbar() {
         <Announcement />
       </div>
       <div className="bg-white shadow sticky top-0 z-40 w-full backdrop-blur-md">
-        <div className="lg:w-[1185px] container flex items-center justify-between lg:pt-3.5 pt-0 px-2 gap-6 mx-auto">
+        <div className="relative lg:w-[1185px] container flex items-center justify-between lg:pt-3.5 pt-0 px-2 gap-6 mx-auto">
           {/* Logo */}
           <Link className="" href="/">
-            {/* <Image
-              src={siteConfig.logo || '/Logo.png'}
+            <Image
+              src={siteConfig.logo || '/logo.png'}
               alt={siteConfig.description || siteConfig.name}
               width={400}
               height={400}
-              className="md:w-36 w-28 mt-1"
-            /> */}LEARNERS
+              className="absolute top-0  md:w-20 w-20 mt-1 rounded-full"
+            />
           </Link>
 
           {/* SEARCH */}
-          <div className="flex-grow hidden md:flex">
+          <div className="flex-grow hidden md:flex ml-15">
             <div className="w-full">
               
               <ul className='overflow-auto flex items-center gap-4 text-red-500 font-bold'>
@@ -223,8 +224,8 @@ export default function Navbar() {
         </div>
         <div className="container mx-auto mt-1 pb-2 px-2 border-t-1 md:border-t-0">
           <div className="flex md:hidden mx-auto">
-            <div className="flex overflow-hidden w-full">
-              <ul className='overflow-auto flex items-center gap-4 text-red-500 font-bold'>
+            <div className="flex overflow-hidden w-full justify-end" >
+              <ul className='overflow-auto flex items-center  gap-4 text-red-500 font-bold'>
                 <li>
                   <Link href={`/`}>Home</Link>
                 </li>
